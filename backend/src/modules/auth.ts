@@ -18,10 +18,10 @@ export const verifyToken = (req, res, next) => {
   }
 }
 
-export const comparePasswords = (password: String, hash: String) => {
+export const comparePasswords = (password: string, hash: string) => {
   return bcrypt.compare(password, hash)
 }
 
-export const hashPassword = (password: String) => {
+export const hashPassword = (password: string) => {
   return bcrypt.hash(password, 5)
 }

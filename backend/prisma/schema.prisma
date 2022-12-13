@@ -11,26 +11,26 @@ datasource db {
 }
 
 model User {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
   username String @unique
   password String
 
-  budget   BigInt
-  expenses Expenses[]
+  budget  BigInt?
+  Expense Expense[]
 }
 
-model Expenses {
+model Expense {
   id String @id @default(auto()) @map("_id") @db.ObjectId
-
-  expenseDate DateTime @default(now())
-  createdAt   DateTime @default(now())
 
   amount      BigInt
   description String
+  present     Boolean @default(true)
 
-  present Boolean
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   userId String
   user   User   @relation(fields: [userId], references: [id])
+
+  @@unique([id, userId])
 }
