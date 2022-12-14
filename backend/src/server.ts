@@ -39,8 +39,11 @@ app.post(
 app.use('/expense', router)
 
 app.use((err, req, res, next) => {
-  console.log(err.message)
-  res.status(500).json({ message: 'Some error occured' })
+  if (err.code === 'P2002') {
+    res.sendStatus(409)
+  } else {
+    res.status(500).json({ message: 'Some error occured' })
+  }
 })
 
 export const start = () => {
