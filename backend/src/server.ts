@@ -5,6 +5,8 @@ import { changePassword, createUser, signin } from './handlers/user'
 import { body } from 'express-validator'
 import validator from './modules/validators'
 import { verifyToken } from './modules/auth'
+import prisma from './db'
+import router from './router'
 
 const app = express()
 
@@ -34,12 +36,15 @@ app.post(
   changePassword
 )
 
+app.use('/expense', router)
+
 app.use((err, req, res, next) => {
-  console.log(err)
+  console.log(err.message)
   res.status(500).json({ message: 'Some error occured' })
 })
 
 export const start = () => {
+  prisma.user.deleteMany({})
   app.listen(3000, () => {
     console.log('running on http://localhost:3000')
   })

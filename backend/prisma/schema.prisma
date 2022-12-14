@@ -6,23 +6,23 @@ generator client {
 }
 
 datasource db {
-  provider = "mongodb"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
 model User {
-  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  id       String @id @default(uuid())
   username String @unique
   password String
 
-  budget  BigInt?
+  budget  Int?
   Expense Expense[]
 }
 
 model Expense {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
+  id String @id @default(uuid())
 
-  amount      BigInt
+  amount      Int
   description String
   present     Boolean @default(true)
 
